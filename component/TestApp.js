@@ -1,9 +1,12 @@
 import React from "react";
+import DisplayContent from "../containers/DisplayContent";
 
 class TestApp extends React.Component {
     render() {
         return(
-            <h1>Hello</h1>
+            <div>
+                <DisplayContent />
+            </div>
         );
     }
 }
