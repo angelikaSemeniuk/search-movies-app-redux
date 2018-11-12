@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 import DisplayContent from "../containers/DisplayContent";
-//import MovieDetailsContainer from "../containers/MovieDetailsContainer";
+import MovieDetailsContainer from "../containers/MovieDetailsContainer";
 
 class TestApp extends React.Component {
     render() {
@@ -16,7 +16,7 @@ class TestApp extends React.Component {
 
                         )}
                     />
-                    <Route path="/moviedetails"/>
+                    <Route path="/moviedetails" component= {MovieDetailsContainer}/>
                 </div>
             </Router>
         );
