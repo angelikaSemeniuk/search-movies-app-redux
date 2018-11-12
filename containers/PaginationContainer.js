@@ -2,26 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { handlePreviousPage, handleNextPage } from "../actions";
 
-const mapStateToProps = (state) => {
-    console.error("action-STATE.CURRENTPAGE", state.currentPage);
-    return {
-        currentPage: state.currentPage,
-        totalPages: state.totalPages,
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        handlePreviousPage : (currentPage) => {
-            dispatch(handlePreviousPage(currentPage));
-        },
-        handleNextPage: (currentPage) => {
-            console.error("action-currentPage", currentPage)
-            dispatch(handleNextPage(currentPage));
-        }
-    }
-}
-
 class PaginationContainer extends React.Component {
     render() {
         return (
@@ -38,5 +18,23 @@ class PaginationContainer extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        currentPage: state.currentPage,
+        totalPages: state.totalPages,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handlePreviousPage : (currentPage) => {
+            dispatch(handlePreviousPage(currentPage));
+        },
+        handleNextPage: (currentPage) => {
+            dispatch(handleNextPage(currentPage));
+        }
+    }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaginationContainer);

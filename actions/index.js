@@ -1,6 +1,5 @@
 const apiKey= "9f8233e5843d6fc70a65f379d4909c34";
 
-
 export function handleRequestForTopRated () {
     return function (dispatch) {
         dispatch({type: "RECEIVE_DATA"});
@@ -20,6 +19,20 @@ export function handleRequestForTopRated () {
     }
 }
 
+export function handleRequestForGenres() {
+    return function (dispatch) {
+        fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=" + apiKey + "&language=en-US")
+            .then((response) => {
+                return response.json();
+            })
+            .then(
+                (data) => {
+                    dispatch({type: "RECEIVE_GENRES", value: data});
+                }
+            )
+
+    }
+}
 export function handlePreviousPage(currentPage) {
     return function (dispatch) {
         const page = currentPage - 1;

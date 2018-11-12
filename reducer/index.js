@@ -1,4 +1,4 @@
-const initialState = {receiveData : false, topRatedMovies: [], currentPage: null, totalPages: null, error: null};
+const initialState = {receiveData : false, topRatedMovies: [], genres: [], currentPage: null, totalPages: null, error: null};
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -10,6 +10,11 @@ const reducer = (state = initialState, action) => {
         case "RECEIVE_TOP_RATED_MOVIES": {
             return Object.assign({}, state, {
                 topRatedMovies: action.value
+            })
+        }
+        case "RECEIVE_GENRES": {
+            return Object.assign({}, state, {
+                genres: action.value
             })
         }
         case "RECEIVE_CURRENT_PAGE": {
