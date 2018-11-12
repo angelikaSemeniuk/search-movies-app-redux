@@ -1,12 +1,22 @@
-const initialState = {receiveData : false, topRatedMovies: [], genres: [], currentPage: null, totalPages: null, error: null};
+const initialState = {
+    topRatedMovies: [],
+    genres: [],
+    currentPage: null,
+    totalPages: null,
+    error: null,
+    ifMovieDetailsReceived: false,
+    movieTitle: "",
+    movieOriginalTitle:"",
+    moviePoster: "",
+    movieGenres: [],
+    movieOverview:"",
+    movieReleasedDate:"",
+    movieRating: "",
+
+};
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case "RECEIVE_DATA": {
-            return Object.assign({}, state, {
-                receiveData: true
-            })
-        }
         case "RECEIVE_TOP_RATED_MOVIES": {
             return Object.assign({}, state, {
                 topRatedMovies: action.value
@@ -30,6 +40,51 @@ const reducer = (state = initialState, action) => {
         case "CATCH_ERROR": {
             return Object.assign({}, state, {
                 error: action.value
+            })
+        }
+        case "RECEIVE_MOVIE_DETAILS": {
+            return Object.assign({}, state, {
+                ifMovieDetailsReceived: true
+            })
+        }
+        case "HANDLE_CLICK_TO_TOP_RATED": {
+            return Object.assign({}, state, {
+                ifMovieDetailsReceived: false
+            })
+        }
+        case "RECEIVE_MOVIE_TITLE": {
+            return Object.assign({}, state, {
+                movieTitle: action.value
+            })
+        }
+        case "RECEIVE_MOVIE_ORIGINAL_TITLE": {
+            return Object.assign({}, state, {
+                movieOriginalTitle: action.value
+            })
+        }
+        case "RECEIVE_MOVIE_POSTER": {
+            return Object.assign({}, state, {
+                moviePoster: action.value
+            })
+        }
+        case "RECEIVE_MOVIE_OVERVIEW": {
+            return Object.assign({}, state, {
+                movieOverview: action.value
+            })
+        }
+        case "RECEIVE_MOVIE_RELEASE_DATE": {
+            return Object.assign({}, state, {
+                movieReleasedDate: action.value
+            })
+        }
+        case "RECEIVE_MOVIE_GENRES": {
+            return Object.assign({}, state, {
+                movieGenres: action.value
+            })
+        }
+        case "RECEIVE_MOVIE_RATING": {
+            return Object.assign({}, state, {
+                movieRating: action.value
             })
         }
         default:

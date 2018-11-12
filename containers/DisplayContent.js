@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { handleRequestForTopRated, handleRequestForGenres } from "../actions";
+import PaginationContainer from "../containers/PaginationContainer";
+import { handleRequestForTopRated, handleRequestForGenres, handleRequestByMovieId } from "../actions";
+
 
 const getGenresName = (movieGenreIds, genres) => {
     let genresOfMovie = [];
@@ -26,17 +28,20 @@ class DisplayContent extends React.Component {
         const listOfMovies = this.props.topRatedMovies.map((movie, index) => {
             const genresName = getGenresName(movie.genre_ids, this.props.genres);
             const genres = genresName.map( (genre, index) => (
-                <p key={index}>{genre}</p>
+                <li key={index}>{genre}</li>
             ));
             return (
                 <li key={index}>
-                    <p>{movie.title}</p>
-                    <p>{genres}</p>
+                    <p onClick={this.props.handleRequestByMovieId.bind(this, movie.id)}><strong>{movie.title}</strong></p>
+                    <ul>{genres}</ul>
                 </li>
             )
         });
         return(
-            <ul>{listOfMovies}</ul>
+            <>
+                <ul>{listOfMovies}</ul>
+                <PaginationContainer/>
+            </>
         );
     }
 }
@@ -44,7 +49,7 @@ class DisplayContent extends React.Component {
 const mapStateToProps = (state) => {
     return{
         topRatedMovies: state.topRatedMovies,
-        genres: state.genres
+        genres: state.genres,
     }
 };
 
@@ -55,6 +60,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleRequestForGenres: () => {
             dispatch(handleRequestForGenres());
+        },
+        handleRequestByMovieId: (movieId, event) => {
+            event.preventDefault();
+            dispatch(handleRequestByMovieId(movieId));
         }
     }
 };

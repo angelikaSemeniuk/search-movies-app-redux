@@ -2,7 +2,6 @@ const apiKey= "9f8233e5843d6fc70a65f379d4909c34";
 
 export function handleRequestForTopRated () {
     return function (dispatch) {
-        dispatch({type: "RECEIVE_DATA"});
         fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=" + apiKey + "&language=en-US&page=1")
             .then((response) => {
                 return response.json();
@@ -28,6 +27,9 @@ export function handleRequestForGenres() {
             .then(
                 (data) => {
                     dispatch({type: "RECEIVE_GENRES", value: data});
+                },
+                (error) => {
+                    dispatch({type: "CATCH_ERROR", value: error});
                 }
             )
 
@@ -73,3 +75,33 @@ export function handleNextPage(currentPage) {
     
 }
 
+export function handleRequestByMovieId(movieId) {
+    return function (dispatch) {
+        dispatch({type: "RECEIVE_MOVIE_DETAILS"});
+        fetch("https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + apiKey + "&language=en-US")
+            .then((response) => {
+                return response.json();
+            })
+            .then(
+                (data) => {
+                    dispatch({type: "RECEIVE_MOVIE_TITLE", value: data.title });
+                    dispatch({type: "RECEIVE_MOVIE_ORIGINAL_TITLE", value: data.original_title});
+                    dispatch({type: "RECEIVE_MOVIE_POSTER", value: data.poster_path});
+                    dispatch({type: "RECEIVE_MOVIE_OVERVIEW", value: data.overview });
+                    dispatch({type: "RECEIVE_MOVIE_RELEASE_DATE", value: data.release_date});
+                    dispatch({type: "RECEIVE_MOVIE_GENRES", value: data.genres });
+                    dispatch({type: "RECEIVE_MOVIE_RATING", value: data.vote_average });
+                },
+                (error) => {
+                    dispatch({type: "CATCH_ERROR", value: error});
+                }
+            )
+
+    }
+}
+
+export function handleClickToTopRatedPath() {
+    return {
+        type: "HANDLE_CLICK_TO_TOP_RATED"
+    }
+}
