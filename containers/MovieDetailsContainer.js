@@ -14,7 +14,7 @@ class MovieDetailsContainer extends React.Component {
                 <Link to='/' onClick={this.props.handleClickToTopRatedPath.bind(this)}>TopRatedMovies</Link>
                 <div className="details">
                     <p>{this.props.movieTitle}</p>
-                    <img src={this.props.moviePoster}/>
+                    <img src={"http://image.tmdb.org/t/p/w185/" + this.props.moviePoster}/>
                     <p dangerouslySetInnerHTML={{__html: "Original title" + this.props.movieOriginalTitle}}></p>
                     <p>{this.props.movieReleasedDate.slice(0,4)}</p>
                     <ul>{genres}</ul>
