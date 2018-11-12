@@ -8,11 +8,22 @@ class DisplayContent extends React.Component {
         this.props.handleRequestForTopRated();
     }
     render() {
+        const listOgMovies = this.props.topRatedMovies.map((movie, index) => (
+            <li key={index}>
+                <p>{movie.title}</p>
+            </li>
+        ));
         return(
-            <h1>TopRated Movies</h1>
+            <ul>{listOgMovies}</ul>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return{
+        topRatedMovies: state.topRatedMovies
+    }
+};
 
 const mapDispatchToProps = (dispatch) => {
     return{
@@ -22,4 +33,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(null, mapDispatchToProps)(DisplayContent);
+export default connect(mapStateToProps, mapDispatchToProps)(DisplayContent);
