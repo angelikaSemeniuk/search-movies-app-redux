@@ -12,6 +12,7 @@ const initialState = {
     movieOverview:"",
     movieReleasedDate:"",
     movieRating: "",
+    recommendationMovies: []
 
 };
 
@@ -85,6 +86,11 @@ const reducer = (state = initialState, action) => {
         case "RECEIVE_MOVIE_RATING": {
             return Object.assign({}, state, {
                 movieRating: action.value
+            })
+        }
+        case "RECEIVE_RECOMMENDATION_MOVIE": {
+            return Object.assign({}, state, {
+                recommendationMovies: action.value
             })
         }
         default:

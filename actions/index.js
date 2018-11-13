@@ -100,6 +100,25 @@ export function handleRequestByMovieId(movieId) {
     }
 }
 
+export function handleRequestForRecommendation(movieId) {
+    return function (dispatch) {
+        dispatch({type: "RECEIVE_MOVIE_DETAILS"});
+        fetch("https://api.themoviedb.org/3/movie/" + movieId + "/recommendations?api_key=" + apiKey + "&language=en-US")
+            .then((response) => {
+                return response.json();
+            })
+            .then(
+                (data) => {
+                    dispatch({type: "RECEIVE_RECOMMENDATION_MOVIE", value: data.results });
+                },
+                (error) => {
+                    dispatch({type: "CATCH_ERROR", value: error});
+                }
+            )
+
+    }
+}
+
 export function handleClickToTopRatedPath() {
     return {
         type: "HANDLE_CLICK_TO_TOP_RATED"

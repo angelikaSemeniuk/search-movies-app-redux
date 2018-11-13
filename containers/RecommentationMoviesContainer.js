@@ -1,8 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import PaginationContainer from "../containers/PaginationContainer";
-import { handleRequestForTopRated, handleRequestForGenres, handleRequestByMovieId, handleRequestForRecommendation } from "../actions";
-
+import { handleRequestByMovieId, handleRequestForRecommendation } from "../actions";
 
 const getGenresName = (movieGenreIds, genres) => {
     let genresOfMovie = [];
@@ -18,14 +16,10 @@ const getGenresName = (movieGenreIds, genres) => {
     return genresOfMovie;
 };
 
-class DisplayContent extends React.Component {
+class RecommentationMoviesContainer extends React.Component {
 
-    componentDidMount() {
-        this.props.handleRequestForTopRated();
-        this.props.handleRequestForGenres();
-    }
     render() {
-        const listOfMovies = this.props.topRatedMovies.map((movie, index) => {
+        const listOfMovies = this.props.recommendationMovies.map((movie, index) => {
             const genresName = getGenresName(movie.genre_ids, this.props.genres);
             const genres = genresName.map( (genre, index) => (
                 <li key={index}>{genre}</li>
@@ -34,15 +28,14 @@ class DisplayContent extends React.Component {
                 <li key={index}>
                     <p onClick={this.props.handleRequestByMovieId.bind(this, movie.id)}><strong>{movie.title}</strong></p>
                     <img src={"http://image.tmdb.org/t/p/w154/" + movie.poster_path}/>
+                    <p>{movie.vote_average}</p>
                     <ul>{genres}</ul>
                 </li>
             )
         });
         return(
             <>
-
                 <ul>{listOfMovies}</ul>
-                <PaginationContainer/>
             </>
         );
     }
@@ -50,19 +43,14 @@ class DisplayContent extends React.Component {
 
 const mapStateToProps = (state) => {
     return{
-        topRatedMovies: state.topRatedMovies,
+        recommendationMovies: state.recommendationMovies,
         genres: state.genres,
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return{
-        handleRequestForTopRated : () => {
-            dispatch(handleRequestForTopRated());
-        },
-        handleRequestForGenres: () => {
-            dispatch(handleRequestForGenres());
-        },
+
         handleRequestByMovieId: (movieId, event) => {
             event.preventDefault();
             dispatch(handleRequestByMovieId(movieId));
@@ -71,4 +59,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DisplayContent);
+export default connect(mapStateToProps, mapDispatchToProps)(RecommentationMoviesContainer);
