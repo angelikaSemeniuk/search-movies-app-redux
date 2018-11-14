@@ -5,6 +5,7 @@ const initialState = {
     totalPages: null,
     error: null,
     ifMovieDetailsReceived: false,
+    movieId: "",
     movieTitle: "",
     movieOriginalTitle:"",
     moviePoster: "",
@@ -14,7 +15,8 @@ const initialState = {
     movieRating: "",
     recommendationMovies: [],
     inputValue: "",
-    searchedMovies: []
+    searchedMovies: [],
+    watchList: []
 
 };
 
@@ -23,6 +25,15 @@ const reducer = (state = initialState, action) => {
         case "RECEIVE_TOP_RATED_MOVIES": {
             return Object.assign({}, state, {
                 topRatedMovies: action.value
+            })
+        }
+        case "ADD_ATTRIBUTE_FOR_EACH_MOVIE": {
+            return Object.assign({}, state, {
+                topRatedMovies: state.topRatedMovies.map((movie) => {
+                    return movie = Object.assign({}, movie, {
+                        addedToWatchList: false
+                    })
+                })
             })
         }
         case "RECEIVE_GENRES": {
@@ -56,6 +67,11 @@ const reducer = (state = initialState, action) => {
         case "HANDLE_CLICK_TO_TOP_RATED": {
             return Object.assign({}, state, {
                 ifMovieDetailsReceived: false
+            })
+        }
+        case "RECEIVE_MOVIE_ID": {
+            return Object.assign({}, state, {
+                movieId: action.value
             })
         }
         case "RECEIVE_MOVIE_TITLE": {
@@ -106,6 +122,23 @@ const reducer = (state = initialState, action) => {
         case "RECEIVE_SEARCHED_MOVIES": {
             return Object.assign({}, state, {
                 searchedMovies: action.value
+            })
+        }
+        case "ADD_ATTRIBUTE_TO_WATCH_LIST": {
+            return Object.assign({}, state, {
+                topRatedMovies: state.topRatedMovies.map((movie, index) => {
+                    if (index === action.index) {
+                        return Object.assign({}, movie, {
+                            addedToWatchList: !action.addedToWatchList
+                        })
+                    }
+                    return movie
+                })
+            })
+        }
+        case "ADD_MOVIE_TO_WATCH_LIST": {
+            return Object.assign({}, state, {
+                watchList: [...state.watchList, action.watchList]
             })
         }
         default:

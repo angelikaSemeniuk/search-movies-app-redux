@@ -18,12 +18,15 @@ class DisplayContent extends React.Component {
                 <ul>
                     {this.props.topRatedMovies.map((movie, index) => {
                         return <ListOfMoviesContainer
+                            key={movie.id.toString()}
                             movie={movie}
                             index={index}
                         />
-                    })}
+                    })
+                    }
+                    <PaginationContainer/>
                 </ul>
-                <PaginationContainer/>
+
             </>
         );
     }

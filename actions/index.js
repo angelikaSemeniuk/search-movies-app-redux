@@ -9,6 +9,7 @@ export function handleRequestForTopRated () {
             .then(
                 (data) => {
                     dispatch({type: "RECEIVE_TOP_RATED_MOVIES", value: data.results});
+                    dispatch({type: "ADD_ATTRIBUTE_FOR_EACH_MOVIE"});
                     dispatch({type: "RECEIVE_CURRENT_PAGE", value: data.page});
                     dispatch({type: "RECEIVE_TOTAL_PAGES", value: data.total_pages});
 
@@ -84,6 +85,7 @@ export function handleRequestByMovieId(movieId) {
             })
             .then(
                 (data) => {
+                    dispatch({type: "RECEIVE_MOVIE_ID", value: data.id });
                     dispatch({type: "RECEIVE_MOVIE_TITLE", value: data.title });
                     dispatch({type: "RECEIVE_MOVIE_ORIGINAL_TITLE", value: data.original_title});
                     dispatch({type: "RECEIVE_MOVIE_POSTER", value: data.poster_path});
@@ -134,7 +136,6 @@ export function handleChangeOnInput(inputValue) {
             })
             .then(
                 (data) => {
-                    console.error("action-RECEIVE_SEARCHED_MOVIES", data);
                     dispatch({type: "RECEIVE_SEARCHED_MOVIES", value: data.results });
 
                 },
@@ -143,5 +144,26 @@ export function handleChangeOnInput(inputValue) {
                 }
             )
 
+    }
+}
+
+export function addMovieToWatchList(movie, index) {
+    return function (dispatch) {
+        dispatch({
+            type: "ADD_ATTRIBUTE_TO_WATCH_LIST",
+            addedToWatchList: movie.addedToWatchList,
+            index: index
+        });
+        dispatch({
+            type: "ADD_MOVIE_TO_WATCH_LIST",
+            watchList: {id: movie.id, title: movie.title, image: movie.poster_path}
+        });
+    }
+}
+
+export function addMovieToWatchListFromDetails(movieId, movieTitle, moviePoster) {
+    return {
+        type: "ADD_MOVIE_TO_WATCH_LIST",
+        watchList: {id: movieId, title: movieTitle, image: moviePoster}
     }
 }
