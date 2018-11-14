@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import PaginationContainer from "../containers/PaginationContainer";
-import { handleRequestForTopRated, handleRequestForGenres, handleRequestByMovieId, handleRequestForRecommendation } from "../actions";
+import InputSearchContainer from "../containers/InputSearchContainer";
+import { handleRequestForTopRated, handleRequestForGenres, handleRequestByMovieId, handleRequestForRecommendation, handleChangeOfInput } from "../actions";
 
 
 const getGenresName = (movieGenreIds, genres) => {
@@ -25,6 +26,9 @@ class DisplayContent extends React.Component {
         this.props.handleRequestForGenres();
     }
     render() {
+        /*let filteredMovies = this.props.topRatedMovies.filter( (movie) => {
+            return movie.title.toLowerCase().indexOf(this.props.inputValue.toLowerCase()) !== -1;
+        });*/
         const listOfMovies = this.props.topRatedMovies.map((movie, index) => {
             const genresName = getGenresName(movie.genre_ids, this.props.genres);
             const genres = genresName.map( (genre, index) => (
@@ -40,7 +44,7 @@ class DisplayContent extends React.Component {
         });
         return(
             <>
-
+                <InputSearchContainer/>
                 <ul>{listOfMovies}</ul>
                 <PaginationContainer/>
             </>

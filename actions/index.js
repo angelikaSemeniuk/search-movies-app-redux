@@ -124,3 +124,24 @@ export function handleClickToTopRatedPath() {
         type: "HANDLE_CLICK_TO_TOP_RATED"
     }
 }
+
+export function handleChangeOnInput(inputValue) {
+    return function (dispatch) {
+        dispatch({type: "CHANGE_INPUT_VALUE", value: inputValue});
+        fetch("https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&language=en-US&query=" + inputValue + "&page=1&include_adult=false")
+            .then((response) => {
+                return response.json();
+            })
+            .then(
+                (data) => {
+                    console.error("action-RECEIVE_SEARCHED_MOVIES", data);
+                    dispatch({type: "RECEIVE_SEARCHED_MOVIES", value: data.results });
+
+                },
+                (error) => {
+                    dispatch({type: "CATCH_ERROR", value: error});
+                }
+            )
+
+    }
+}

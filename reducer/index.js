@@ -12,7 +12,9 @@ const initialState = {
     movieOverview:"",
     movieReleasedDate:"",
     movieRating: "",
-    recommendationMovies: []
+    recommendationMovies: [],
+    inputValue: "",
+    searchedMovies: []
 
 };
 
@@ -45,7 +47,10 @@ const reducer = (state = initialState, action) => {
         }
         case "RECEIVE_MOVIE_DETAILS": {
             return Object.assign({}, state, {
-                ifMovieDetailsReceived: true
+                ifMovieDetailsReceived: true,
+                inputValue: "",
+                searchedMovies: []
+
             })
         }
         case "HANDLE_CLICK_TO_TOP_RATED": {
@@ -91,6 +96,16 @@ const reducer = (state = initialState, action) => {
         case "RECEIVE_RECOMMENDATION_MOVIE": {
             return Object.assign({}, state, {
                 recommendationMovies: action.value
+            })
+        }
+        case "CHANGE_INPUT_VALUE": {
+            return Object.assign({}, state, {
+                inputValue: action.value
+            })
+        }
+        case "RECEIVE_SEARCHED_MOVIES": {
+            return Object.assign({}, state, {
+                searchedMovies: action.value
             })
         }
         default:

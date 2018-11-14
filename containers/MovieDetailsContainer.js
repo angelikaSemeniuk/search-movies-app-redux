@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { handleClickToTopRatedPath } from "../actions";
 import RecommentationMoviesContainer from "../containers/RecommentationMoviesContainer";
+import InputSearchContainer from "../containers/InputSearchContainer";
+import { handleClickToTopRatedPath } from "../actions";
 
 class MovieDetailsContainer extends React.Component {
 
@@ -13,6 +14,7 @@ class MovieDetailsContainer extends React.Component {
         return(
             <>
                 <Link to='/' onClick={this.props.handleClickToTopRatedPath.bind(this)}>TopRatedMovies</Link>
+                <InputSearchContainer/>
                 <div className="details">
                     <p>{this.props.movieTitle}</p>
                     <img src={"http://image.tmdb.org/t/p/w342/" + this.props.moviePoster}/>
