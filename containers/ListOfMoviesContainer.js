@@ -28,25 +28,23 @@ class ListOfMoviesContainer extends React.Component {
             }
         });
         return(
-            <li key={this.props.movie.toString()}>
-                <div
-                    onMouseEnter={this.props.getMovieDetails.bind(this, this.props.movie, this.props.index)}
-                    onMouseLeave={this.props.clearMovieDetails.bind(this, this.props.movie, this.props.index)}
-
-                >
-                    {this.props.movie.focusedImg ? (
-                        <>
-                            <p onClick={this.props.handleRequestByMovieId.bind(this, this.props.movie.id)}><strong>{this.props.movie.title}</strong></p>
-                            <ul>{genres}</ul>
-                            <p>{this.props.movie.vote_average}</p>
-                        </> ) : (
+            <li
+                key={this.props.movie.toString()}
+                onMouseEnter={this.props.getMovieDetails.bind(this, this.props.movie, this.props.index)}
+                onMouseLeave={this.props.clearMovieDetails.bind(this, this.props.movie, this.props.index)}
+            >
+                {this.props.movie.focusedImg ? (
+                    <div className="details">
+                        <p onClick={this.props.handleRequestByMovieId.bind(this, this.props.movie.id)}><strong>{this.props.movie.title}</strong></p>
+                        <ul>{genres}</ul>
+                        <p>{this.props.movie.vote_average}</p>
+                    </div> ) : (
                         <img src={"http://image.tmdb.org/t/p/w154/" + this.props.movie.poster_path} />
                     )}
                     {alreadyAddedToWatchList.length || this.props.movie.addedToWatchList ?
-                        <button disabled>Add to watch list</button> :
-                        <button onClick={this.props.addMovieToWatchList.bind(this, this.props.movie, this.props.index)}>Add to watch list</button>
+                        <button className="addButton" disabled>Add to watch list</button> :
+                        <button className="addButton" onClick={this.props.addMovieToWatchList.bind(this, this.props.movie, this.props.index)}>Add to watch list</button>
                     }
-                </div>
             </li>
         );
     }

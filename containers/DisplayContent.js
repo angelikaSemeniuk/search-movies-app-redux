@@ -1,9 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import PaginationContainer from "../containers/PaginationContainer";
 import InputSearchContainer from "../containers/InputSearchContainer";
 import ListOfMoviesContainer from "../containers/ListOfMoviesContainer";
-import { handleRequestForTopRated, handleRequestForGenres, handleRequestByMovieId, handleRequestForRecommendation, handleChangeOfInput } from "../actions";
+import {
+    handleRequestForTopRated,
+    handleRequestForGenres,
+    handleRequestByMovieId,
+    handleRequestForRecommendation,
+    handleChangeOfInput,
+    handleClickToTopRatedPath,
+    showWatchList
+} from "../actions";
 
 class DisplayContent extends React.Component {
 
@@ -15,6 +24,8 @@ class DisplayContent extends React.Component {
         return(
             <>
                 <div className="navigation">
+                    <Link to='/' onClick={this.props.handleClickToTopRatedPath.bind(this)}>Top Rated Movies</Link>
+                    <Link to="/mywatchlist" onClick={this.props.showWatchList.bind(this)}>List to watch</Link>
                     <InputSearchContainer/>
                 </div>
                 <ul className="list">
@@ -54,6 +65,12 @@ const mapDispatchToProps = (dispatch) => {
             event.preventDefault();
             dispatch(handleRequestByMovieId(movieId));
             dispatch(handleRequestForRecommendation(movieId));
+        },
+        handleClickToTopRatedPath: () => {
+            dispatch(handleClickToTopRatedPath());
+        },
+        showWatchList: () => {
+            dispatch(showWatchList());
         }
     }
 };

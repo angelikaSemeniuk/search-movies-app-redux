@@ -16,7 +16,8 @@ const initialState = {
     recommendationMovies: [],
     inputValue: "",
     searchedMovies: [],
-    watchList: []
+    watchList: [],
+    listShown: false
 
 };
 
@@ -67,7 +68,8 @@ const reducer = (state = initialState, action) => {
         }
         case "HANDLE_CLICK_TO_TOP_RATED": {
             return Object.assign({}, state, {
-                ifMovieDetailsReceived: false
+                ifMovieDetailsReceived: false,
+                listShown: false
             })
         }
         case "RECEIVE_MOVIE_ID": {
@@ -164,6 +166,17 @@ const reducer = (state = initialState, action) => {
                     }
                     return movie
                 })
+            })
+        }
+        case "DELETE_FROM_WATCH_LIST": {
+           state.watchList.splice(action.index, 1);
+           return Object.assign({}, state, {
+               watchList: [...state.watchList]
+           })
+        }
+        case "SHOW_WATCH_LIST": {
+            return Object.assign({}, state, {
+                listShown: true
             })
         }
         default:

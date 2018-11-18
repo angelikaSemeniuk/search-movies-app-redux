@@ -15,17 +15,17 @@ class InputSearchContainer extends React.Component {
             )
         });
         return(
-            <div>
-                <form role="search">
+            <>
+                <div className="search-container">
                     <input
                         type="search"
                         value={this.props.inputValue}
                         onChange={this.props.handleChangeOnInput.bind(this)}
                         placeholder="Search movie..."
                     />
-                </form>
-                <ul>{listOfMovies}</ul>
-            </div>
+                </div>
+                {this.props.inputValue && <ul>{listOfMovies}</ul>}
+             </>
         );
     }
 }

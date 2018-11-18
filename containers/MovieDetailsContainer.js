@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import RecommentationMoviesContainer from "../containers/RecommentationMoviesContainer";
 import InputSearchContainer from "../containers/InputSearchContainer";
-import { handleClickToTopRatedPath, addMovieToWatchListFromDetails} from "../actions";
+import { handleClickToTopRatedPath, addMovieToWatchListFromDetails, showWatchList} from "../actions";
 
 class MovieDetailsContainer extends React.Component {
 
@@ -18,8 +18,11 @@ class MovieDetailsContainer extends React.Component {
         });
         return(
             <>
-                <Link to='/' onClick={this.props.handleClickToTopRatedPath.bind(this)}>TopRatedMovies</Link>
-                <InputSearchContainer/>
+                <div className="navigation">
+                    <Link to='/' onClick={this.props.handleClickToTopRatedPath.bind(this)}>Top Rated Movies</Link>
+                    <Link to="/mywatchlist" onClick={this.props.showWatchList.bind(this)}>List to watch</Link>
+                    <InputSearchContainer/>
+                </div>
                 <div className="details">
                     <p>{this.props.movieTitle}</p>
                     <img src={"http://image.tmdb.org/t/p/w342/" + this.props.moviePoster}/>
@@ -65,7 +68,11 @@ const mapDispatchToProps = (dispatch) => {
         addMovieToWatchListFromDetails: (movieId, movieTitle, moviePoster) => {
             console.error("action-movieId, movieTitle, moviePoster ", movieId, movieTitle, moviePoster);
             dispatch(addMovieToWatchListFromDetails(movieId, movieTitle, moviePoster));
+        },
+        showWatchList: () => {
+            dispatch(showWatchList());
         }
+
     }
 };
 

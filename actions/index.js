@@ -183,3 +183,16 @@ export function clearMovieDetails(movie, index) {
         index: index
     }
 }
+
+export function deleteFromWatchList(index) {
+    return {
+        type: "DELETE_FROM_WATCH_LIST",
+        index: index
+    }
+}
+
+export function showWatchList() {
+    return {
+        type: "SHOW_WATCH_LIST"
+    }
+}
