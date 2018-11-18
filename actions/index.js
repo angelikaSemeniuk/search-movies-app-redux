@@ -167,3 +167,19 @@ export function addMovieToWatchListFromDetails(movieId, movieTitle, moviePoster)
         watchList: {id: movieId, title: movieTitle, image: moviePoster}
     }
 }
+
+export function getMovieDetails(movie, index) {
+    return {
+        type: "GET_MOVIE_DETAILS",
+        focusedImg: movie.focusedImg,
+        index: index
+    }
+}
+
+export function clearMovieDetails(movie, index) {
+    return {
+        type: "CLEAR_MOVIE_DETAILS",
+        focusedImg: movie.focusedImg,
+        index: index
+    }
+}

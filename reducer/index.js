@@ -31,7 +31,8 @@ const reducer = (state = initialState, action) => {
             return Object.assign({}, state, {
                 topRatedMovies: state.topRatedMovies.map((movie) => {
                     return movie = Object.assign({}, movie, {
-                        addedToWatchList: false
+                        addedToWatchList: false,
+                        focusedImg: false
                     })
                 })
             })
@@ -139,6 +140,30 @@ const reducer = (state = initialState, action) => {
         case "ADD_MOVIE_TO_WATCH_LIST": {
             return Object.assign({}, state, {
                 watchList: [...state.watchList, action.watchList]
+            })
+        }
+        case "GET_MOVIE_DETAILS": {
+            return Object.assign({}, state, {
+                topRatedMovies: state.topRatedMovies.map((movie, index) => {
+                    if (index === action.index) {
+                        return Object.assign({}, movie, {
+                            focusedImg: !action.focusedImg
+                        })
+                    }
+                    return movie
+                })
+            })
+        }
+        case "CLEAR_MOVIE_DETAILS": {
+            return Object.assign({}, state, {
+                topRatedMovies: state.topRatedMovies.map((movie, index) => {
+                    if (index === action.index) {
+                        return Object.assign({}, movie, {
+                            focusedImg: false
+                        })
+                    }
+                    return movie
+                })
             })
         }
         default:

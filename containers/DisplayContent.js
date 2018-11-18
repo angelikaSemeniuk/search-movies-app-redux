@@ -14,8 +14,10 @@ class DisplayContent extends React.Component {
     render() {
         return(
             <>
-                <InputSearchContainer/>
-                <ul>
+                <div className="navigation">
+                    <InputSearchContainer/>
+                </div>
+                <ul className="list">
                     {this.props.topRatedMovies.map((movie, index) => {
                         return <ListOfMoviesContainer
                             key={movie.id.toString()}
@@ -24,9 +26,10 @@ class DisplayContent extends React.Component {
                         />
                     })
                     }
-                    <PaginationContainer/>
                 </ul>
-
+                <div className="pagination">
+                    <PaginationContainer/>
+                </div>
             </>
         );
     }
