@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import {handleChangeOnInput, handleRequestByMovieId, handleRequestForRecommendation} from "../actions";
 
-class InputSearchContainer extends React.Component {
+class InputSearch extends React.Component {
     render() {
         const listOfMovies = this.props.searchedMovies.map((movie, index) => {
             return (
@@ -50,4 +50,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(InputSearchContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(InputSearch)

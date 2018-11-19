@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteFromWatchList, handleClickToTopRatedPath  } from "../actions";
-import InputSearchContainer from "../containers/InputSearchContainer";
+import InputSearch from "./InputSearch";
 
 
-class WatchListContainer extends React.Component {
+class ListToWatch extends React.Component {
 
     render () {
         const listItems = this.props.watchList.map((movie, index) => (
@@ -19,8 +19,8 @@ class WatchListContainer extends React.Component {
             <>
                 <div className="navigation">
                     <Link to='/' onClick={this.props.handleClickToTopRatedPath.bind(this)}>Top Rated Movies</Link>
-                    <Link to="/mywatchlist">List to watch</Link>
-                    <InputSearchContainer/>
+                    <Link to="/list-to-watch">List to watch</Link>
+                    <InputSearch/>
                 </div>
                 <ul>{listItems}</ul>
             </>
@@ -46,4 +46,4 @@ const mapDispatchToState = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToState)(WatchListContainer)
+export default connect(mapStateToProps, mapDispatchToState)(ListToWatch)

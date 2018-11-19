@@ -16,7 +16,7 @@ const getGenresName = (movieGenreIds, genres) => {
     return genresOfMovie;
 };
 
-class RecommentationMoviesContainer extends React.Component {
+class MoviesRecommendation extends React.Component {
 
     render() {
         const listOfMovies = this.props.recommendationMovies.map((movie, index) => {
@@ -59,4 +59,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecommentationMoviesContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MoviesRecommendation);

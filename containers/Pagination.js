@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { handlePreviousPage, handleNextPage } from "../actions";
 
-class PaginationContainer extends React.Component {
+class Pagination extends React.Component {
     render() {
         return (
             <div className="pagination">
@@ -37,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PaginationContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(Pagination);

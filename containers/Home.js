@@ -1,21 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import PaginationContainer from "../containers/PaginationContainer";
-import InputSearchContainer from "../containers/InputSearchContainer";
-import ListOfMoviesContainer from "../containers/ListOfMoviesContainer";
+import Pagination from "./Pagination";
+import InputSearch from "./InputSearch";
+import MovieListItem from "./MovieListItem";
 import {
     handleRequestForTopRated,
     handleRequestForGenres,
-    handleRequestByMovieId,
-    handleRequestForRecommendation,
     handleChangeOfInput,
     handleClickToTopRatedPath,
     showWatchList
 } from "../actions";
 
-class DisplayContent extends React.Component {
-
+class Home extends React.Component {
     componentDidMount() {
         this.props.handleRequestForTopRated();
         this.props.handleRequestForGenres();
@@ -25,12 +22,12 @@ class DisplayContent extends React.Component {
             <>
                 <div className="navigation">
                     <Link to='/' onClick={this.props.handleClickToTopRatedPath.bind(this)}>Top Rated Movies</Link>
-                    <Link to="/mywatchlist" onClick={this.props.showWatchList.bind(this)}>List to watch</Link>
-                    <InputSearchContainer/>
+                    <Link to="/list-to-watch" onClick={this.props.showWatchList.bind(this)}>List to watch</Link>
+                    <InputSearch/>
                 </div>
                 <ul className="list">
                     {this.props.topRatedMovies.map((movie, index) => {
-                        return <ListOfMoviesContainer
+                        return <MovieListItem
                             key={movie.id.toString()}
                             movie={movie}
                             index={index}
@@ -39,7 +36,7 @@ class DisplayContent extends React.Component {
                     }
                 </ul>
                 <div className="pagination">
-                    <PaginationContainer/>
+                    <Pagination/>
                 </div>
             </>
         );
@@ -61,11 +58,6 @@ const mapDispatchToProps = (dispatch) => {
         handleRequestForGenres: () => {
             dispatch(handleRequestForGenres());
         },
-        handleRequestByMovieId: (movieId, event) => {
-            event.preventDefault();
-            dispatch(handleRequestByMovieId(movieId));
-            dispatch(handleRequestForRecommendation(movieId));
-        },
         handleClickToTopRatedPath: () => {
             dispatch(handleClickToTopRatedPath());
         },
@@ -75,4 +67,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DisplayContent);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

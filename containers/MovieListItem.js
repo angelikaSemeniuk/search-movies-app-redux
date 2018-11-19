@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { handleRequestByMovieId, handleRequestForRecommendation, addMovieToWatchList, getMovieDetails, clearMovieDetails } from "../actions";
+import { Link } from "react-router-dom";
+import { addMovieToWatchList, getMovieDetails, clearMovieDetails } from "../actions";
 
 const getGenresName = (movieGenreIds, genres) => {
     let genresOfMovie = [];
@@ -16,7 +17,7 @@ const getGenresName = (movieGenreIds, genres) => {
     return genresOfMovie;
 };
 
-class ListOfMoviesContainer extends React.Component {
+class MovieListItem extends React.Component {
     render () {
         const genresName = getGenresName(this.props.movie.genre_ids, this.props.genres);
         const genres = genresName.map( (genre, index) => (
@@ -33,18 +34,29 @@ class ListOfMoviesContainer extends React.Component {
                 onMouseEnter={this.props.getMovieDetails.bind(this, this.props.movie, this.props.index)}
                 onMouseLeave={this.props.clearMovieDetails.bind(this, this.props.movie, this.props.index)}
             >
-                {this.props.movie.focusedImg ? (
-                    <div className="details">
-                        <p onClick={this.props.handleRequestByMovieId.bind(this, this.props.movie.id)}><strong>{this.props.movie.title}</strong></p>
-                        <ul>{genres}</ul>
-                        <p>{this.props.movie.vote_average}</p>
-                    </div> ) : (
-                        <img src={"http://image.tmdb.org/t/p/w154/" + this.props.movie.poster_path} />
+                <Link
+                    to={{
+                        pathname: "/movie",
+                        search: "?id=" + this.props.movie.id,
+                    }}
+                >
+                    {this.props.movie.focusedImg ? (
+                        <>
+                            <div className="details" >
+                                <h3><strong>{this.props.movie.title}</strong></h3>
+                                <ul className="genres">{genres}</ul>
+                                <p className="rating">{this.props.movie.vote_average}</p>
+                            </div>
+                        </> ) : (
+                        <div className="details">
+                            <img src={"http://image.tmdb.org/t/p/w154/" + this.props.movie.poster_path} />
+                        </div>
                     )}
-                    {alreadyAddedToWatchList.length || this.props.movie.addedToWatchList ?
-                        <button className="addButton" disabled>Add to watch list</button> :
-                        <button className="addButton" onClick={this.props.addMovieToWatchList.bind(this, this.props.movie, this.props.index)}>Add to watch list</button>
-                    }
+                </Link>
+                {alreadyAddedToWatchList.length || this.props.movie.addedToWatchList ?
+                    <button  disabled>Add to watch list</button> :
+                    <button className="addButton" onClick={this.props.addMovieToWatchList.bind(this, this.props.movie, this.props.index)}>Add to watch list</button>
+                }
             </li>
         );
     }
@@ -61,11 +73,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return{
-        handleRequestByMovieId: (movieId, event) => {
-            event.preventDefault();
-            dispatch(handleRequestByMovieId(movieId));
-            dispatch(handleRequestForRecommendation(movieId));
-        },
         addMovieToWatchList: (movie, index) => {
             dispatch(addMovieToWatchList(movie, index));
         },
@@ -78,4 +85,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListOfMoviesContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MovieListItem);

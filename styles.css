@@ -1,0 +1,109 @@
+
+body {
+    font-size: 18px;
+    font-family: "Zapf-Chancery";
+    font-style: normal;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px;
+    min-height: 30px;
+    background: #485167;
+}
+
+.navigation a {
+    padding: 10px;
+    text-align: center;
+    color: #EAE6DA;
+    text-decoration: overline;
+    text-shadow: 3px 6px 8px #EAE6DA;
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 15px;
+    margin: 5px 10px;
+}
+
+.list li {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 5px;
+    list-style: none;
+}
+
+.details {
+    display: flex;
+    width: 165px;
+    height: 240px;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    border: 5px solid #485167;
+    border-radius: 6px;
+    list-style: none;
+    font-size: 12px;
+}
+
+.details img {
+    align-self: center;
+    padding: 5px;
+}
+
+.details h3 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 5px;
+    padding: 5px;
+    list-style: none;
+    background: #485167;
+    color: #EAE6DA;
+    border-radius: 3px;
+}
+
+.genres {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    padding: 5px;
+    list-style: none;
+    align-self: center;
+}
+
+.genres li {
+    width: 80%;
+    margin-bottom: 3px;
+    padding: 3px;
+    align-self: center;
+    align-items: center;
+    text-align: center;
+    background: lightgrey;
+    color: white;
+}
+
+.details p {
+    margin: 5px 0;
+    padding: 10px;
+    background: gold;
+    color: white;
+    border-radius: 20px;
+}
+
+.addButton {
+    padding: 5px;
+    align-self: center;
+    text-align: center;
+    color: #EAE6DA;
+    background: #485167;
+    border: 2px solid white;
+    border-radius: 6px;
+    font-size: 18px;
+}
