@@ -4,21 +4,12 @@ const initialState = {
     currentPage: null,
     totalPages: null,
     error: null,
-    ifMovieDetailsReceived: false,
-    movieId: "",
-    movieTitle: "",
-    movieOriginalTitle:"",
-    moviePoster: "",
-    movieGenres: [],
-    movieOverview:"",
-    movieReleasedDate:"",
-    movieRating: "",
+    loaded: false,
+    receivedMovie: [],
     recommendationMovies: [],
     inputValue: "",
     searchedMovies: [],
     watchList: [],
-    listShown: false
-
 };
 
 const reducer = (state = initialState, action) => {
@@ -60,61 +51,37 @@ const reducer = (state = initialState, action) => {
         }
         case "RECEIVE_MOVIE_DETAILS": {
             return Object.assign({}, state, {
-                ifMovieDetailsReceived: true,
+                loaded: true,
                 inputValue: "",
-                searchedMovies: []
+                searchedMovies: [],
+                receivedMovie: []
+
 
             })
         }
-        case "HANDLE_CLICK_TO_TOP_RATED": {
+        case "RECEIVE_MOVIE_INFO_BY_ID": {
             return Object.assign({}, state, {
-                ifMovieDetailsReceived: false,
-                listShown: false
+                receivedMovie: [...state.receivedMovie, action.value]
             })
         }
-        case "RECEIVE_MOVIE_ID": {
+        case "GET_CLEAR_RECEIVE_MOVIE": {
             return Object.assign({}, state, {
-                movieId: action.value
-            })
-        }
-        case "RECEIVE_MOVIE_TITLE": {
-            return Object.assign({}, state, {
-                movieTitle: action.value
-            })
-        }
-        case "RECEIVE_MOVIE_ORIGINAL_TITLE": {
-            return Object.assign({}, state, {
-                movieOriginalTitle: action.value
-            })
-        }
-        case "RECEIVE_MOVIE_POSTER": {
-            return Object.assign({}, state, {
-                moviePoster: action.value
-            })
-        }
-        case "RECEIVE_MOVIE_OVERVIEW": {
-            return Object.assign({}, state, {
-                movieOverview: action.value
-            })
-        }
-        case "RECEIVE_MOVIE_RELEASE_DATE": {
-            return Object.assign({}, state, {
-                movieReleasedDate: action.value
-            })
-        }
-        case "RECEIVE_MOVIE_GENRES": {
-            return Object.assign({}, state, {
-                movieGenres: action.value
-            })
-        }
-        case "RECEIVE_MOVIE_RATING": {
-            return Object.assign({}, state, {
-                movieRating: action.value
+                receivedMovie: []
             })
         }
         case "RECEIVE_RECOMMENDATION_MOVIE": {
             return Object.assign({}, state, {
                 recommendationMovies: action.value
+            })
+        }
+        case "ADD_ATTRIBUTE_FOR_RECOMMENDED_MOVIE": {
+            return Object.assign({}, state, {
+                recommendationMovies: state.recommendationMovies.map((movie) => {
+                    return movie = Object.assign({}, movie, {
+                        addedToWatchList: false,
+                        focusedImg: false
+                    })
+                })
             })
         }
         case "CHANGE_INPUT_VALUE": {
@@ -156,6 +123,18 @@ const reducer = (state = initialState, action) => {
                 })
             })
         }
+        case "GET_MOVIE_DETAILS_FOR_RECOMMENDED_MOVIES": {
+            return Object.assign({}, state, {
+                recommendationMovies: state.recommendationMovies.map((movie, index) => {
+                    if (index === action.index) {
+                        return Object.assign({}, movie, {
+                            focusedImg: !action.focusedImg
+                        })
+                    }
+                    return movie
+                })
+            })
+        }
         case "CLEAR_MOVIE_DETAILS": {
             return Object.assign({}, state, {
                 topRatedMovies: state.topRatedMovies.map((movie, index) => {
@@ -168,15 +147,22 @@ const reducer = (state = initialState, action) => {
                 })
             })
         }
-        case "DELETE_FROM_WATCH_LIST": {
-           state.watchList.splice(action.index, 1);
-           return Object.assign({}, state, {
-               watchList: [...state.watchList]
-           })
-        }
-        case "SHOW_WATCH_LIST": {
+        case "CLEAR_MOVIE_DETAILS__FOR_RECOMMENDED_MOVIES": {
             return Object.assign({}, state, {
-                listShown: true
+                recommendationMovies: state.recommendationMovies.map((movie, index) => {
+                    if (index === action.index) {
+                        return Object.assign({}, movie, {
+                            focusedImg: false
+                        })
+                    }
+                    return movie
+                })
+            })
+        }
+        case "DELETE_FROM_WATCH_LIST": {
+            state.watchList.splice(action.index, 1);
+            return Object.assign({}, state, {
+                watchList: [...state.watchList]
             })
         }
         default:

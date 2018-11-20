@@ -53,7 +53,7 @@ export function handlePreviousPage(currentPage) {
                 }
             )
     }
-    
+
 }
 
 export function handleNextPage(currentPage) {
@@ -73,10 +73,10 @@ export function handleNextPage(currentPage) {
                 }
             )
     }
-    
+
 }
 
-export function handleRequestByMovieId(movieId) {
+export function handleRequestByMovieId(movieId, addedToWatchList) {
     return function (dispatch) {
         dispatch({type: "RECEIVE_MOVIE_DETAILS"});
         fetch("https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + apiKey + "&language=en-US")
@@ -85,14 +85,20 @@ export function handleRequestByMovieId(movieId) {
             })
             .then(
                 (data) => {
-                    dispatch({type: "RECEIVE_MOVIE_ID", value: data.id });
-                    dispatch({type: "RECEIVE_MOVIE_TITLE", value: data.title });
-                    dispatch({type: "RECEIVE_MOVIE_ORIGINAL_TITLE", value: data.original_title});
-                    dispatch({type: "RECEIVE_MOVIE_POSTER", value: data.poster_path});
-                    dispatch({type: "RECEIVE_MOVIE_OVERVIEW", value: data.overview });
-                    dispatch({type: "RECEIVE_MOVIE_RELEASE_DATE", value: data.release_date});
-                    dispatch({type: "RECEIVE_MOVIE_GENRES", value: data.genres });
-                    dispatch({type: "RECEIVE_MOVIE_RATING", value: data.vote_average });
+                    dispatch({
+                        type: "RECEIVE_MOVIE_INFO_BY_ID",
+                        value: {
+                            id: data.id,
+                            title: data.title,
+                            originalTitle: data.original_title,
+                            image: data.poster_path,
+                            overview: data.overview,
+                            releasedDate: data.release_date,
+                            genres: data.genres,
+                            rating: data.rating,
+                            addedToWatchList: addedToWatchList
+                        }
+                    });
                 },
                 (error) => {
                     dispatch({type: "CATCH_ERROR", value: error});
@@ -100,6 +106,13 @@ export function handleRequestByMovieId(movieId) {
             )
 
     }
+}
+
+export function getClearReceivedMovie() {
+    return {
+        type: "GET_CLEAR_RECEIVE_MOVIE"
+    }
+
 }
 
 export function handleRequestForRecommendation(movieId) {
@@ -112,18 +125,13 @@ export function handleRequestForRecommendation(movieId) {
             .then(
                 (data) => {
                     dispatch({type: "RECEIVE_RECOMMENDATION_MOVIE", value: data.results });
+                    dispatch({type: "ADD_ATTRIBUTE_FOR_RECOMMENDED_MOVIE"});
                 },
                 (error) => {
                     dispatch({type: "CATCH_ERROR", value: error});
                 }
             )
 
-    }
-}
-
-export function handleClickToTopRatedPath() {
-    return {
-        type: "HANDLE_CLICK_TO_TOP_RATED"
     }
 }
 
@@ -191,8 +199,18 @@ export function deleteFromWatchList(index) {
     }
 }
 
-export function showWatchList() {
+export function getMovieDetailsForRecommendedMovies(movie, index) {
     return {
-        type: "SHOW_WATCH_LIST"
+        type: "GET_MOVIE_DETAILS_FOR_RECOMMENDED_MOVIES",
+        focusedImg: movie.focusedImg,
+        index: index
+    }
+}
+
+export function clearMovieDetailsForRecommendedMovies(movie, index) {
+    return {
+        type: "CLEAR_MOVIE_DETAILS__FOR_RECOMMENDED_MOVIES",
+        focusedImg: movie.focusedImg,
+        index: index
     }
 }

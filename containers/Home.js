@@ -7,9 +7,7 @@ import MovieListItem from "./MovieListItem";
 import {
     handleRequestForTopRated,
     handleRequestForGenres,
-    handleChangeOfInput,
-    handleClickToTopRatedPath,
-    showWatchList
+    handleChangeOfInput
 } from "../actions";
 
 class Home extends React.Component {
@@ -21,8 +19,8 @@ class Home extends React.Component {
         return(
             <>
                 <div className="navigation">
-                    <Link to='/' onClick={this.props.handleClickToTopRatedPath.bind(this)}>Top Rated Movies</Link>
-                    <Link to="/list-to-watch" onClick={this.props.showWatchList.bind(this)}>List to watch</Link>
+                    <Link to='/'>Top Rated Movies</Link>
+                    <Link to="/list-to-watch">List to watch</Link>
                     <InputSearch/>
                 </div>
                 <ul className="list">
@@ -57,12 +55,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleRequestForGenres: () => {
             dispatch(handleRequestForGenres());
-        },
-        handleClickToTopRatedPath: () => {
-            dispatch(handleClickToTopRatedPath());
-        },
-        showWatchList: () => {
-            dispatch(showWatchList());
         }
     }
 };

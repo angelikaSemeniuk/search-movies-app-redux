@@ -25,7 +25,7 @@ class MovieListItem extends React.Component {
         ));
         const alreadyAddedToWatchList = this.props.watchList.filter((movie) => {
             if(movie.title === this.props.movie.title) {
-               return movie.title
+                return movie.title
             }
         });
         return(
@@ -38,6 +38,7 @@ class MovieListItem extends React.Component {
                     to={{
                         pathname: "/movie",
                         search: "?id=" + this.props.movie.id,
+                        addedToWatchList: "?list=" + this.props.movie.addedToWatchList
                     }}
                 >
                     {this.props.movie.focusedImg ? (

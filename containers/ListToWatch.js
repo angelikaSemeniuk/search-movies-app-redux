@@ -18,7 +18,7 @@ class ListToWatch extends React.Component {
         return (
             <>
                 <div className="navigation">
-                    <Link to='/' onClick={this.props.handleClickToTopRatedPath.bind(this)}>Top Rated Movies</Link>
+                    <Link to='/'>Top Rated Movies</Link>
                     <Link to="/list-to-watch">List to watch</Link>
                     <InputSearch/>
                 </div>
@@ -39,9 +39,6 @@ const mapDispatchToState = (dispatch) => {
     return {
         deleteFromWatchList: (index) => {
             dispatch(deleteFromWatchList(index));
-        },
-        handleClickToTopRatedPath: () => {
-            dispatch(handleClickToTopRatedPath());
         }
     }
 };
