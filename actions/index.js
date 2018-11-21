@@ -95,7 +95,7 @@ export function handleRequestByMovieId(movieId, addedToWatchList) {
                             overview: data.overview,
                             releasedDate: data.release_date,
                             genres: data.genres,
-                            rating: data.rating,
+                            rating: data.vote_average,
                             addedToWatchList: addedToWatchList
                         }
                     });
@@ -145,6 +145,7 @@ export function handleChangeOnInput(inputValue) {
             .then(
                 (data) => {
                     dispatch({type: "RECEIVE_SEARCHED_MOVIES", value: data.results });
+                    dispatch({type: "ADD_ATTRIBUTE_FOR_SEARCHED_MOVIE"});
 
                 },
                 (error) => {
@@ -212,5 +213,27 @@ export function clearMovieDetailsForRecommendedMovies(movie, index) {
         type: "CLEAR_MOVIE_DETAILS__FOR_RECOMMENDED_MOVIES",
         focusedImg: movie.focusedImg,
         index: index
+    }
+}
+
+export function getMovieDetailsForSearchedMovies(movie, index) {
+    return {
+        type: "GET_MOVIE_DETAILS_FOR_SEARCHED_MOVIES",
+        focusedImg: movie.focusedImg,
+        index: index
+    }
+}
+
+export function clearMovieDetailsForSearchedMovies(movie, index) {
+    return {
+        type: "CLEAR_MOVIE_DETAILS__FOR_SEARCHED_MOVIES",
+        focusedImg: movie.focusedImg,
+        index: index
+    }
+}
+
+export function getClearSearchedMovie() {
+    return{
+        type: "GET_CLEAR_SEARCHED_MOVIE"
     }
 }

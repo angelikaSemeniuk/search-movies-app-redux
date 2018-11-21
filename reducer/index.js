@@ -94,6 +94,16 @@ const reducer = (state = initialState, action) => {
                 searchedMovies: action.value
             })
         }
+        case "ADD_ATTRIBUTE_FOR_SEARCHED_MOVIE": {
+            return Object.assign({}, state, {
+                searchedMovies: state.searchedMovies.map((movie) => {
+                    return movie = Object.assign({}, movie, {
+                        addedToWatchList: false,
+                        focusedImg: false
+                    })
+                })
+            })
+        }
         case "ADD_ATTRIBUTE_TO_WATCH_LIST": {
             return Object.assign({}, state, {
                 topRatedMovies: state.topRatedMovies.map((movie, index) => {
@@ -157,6 +167,36 @@ const reducer = (state = initialState, action) => {
                     }
                     return movie
                 })
+            })
+        }
+        case "GET_MOVIE_DETAILS_FOR_SEARCHED_MOVIES": {
+            return Object.assign({}, state, {
+                searchedMovies: state.searchedMovies.map((movie, index) => {
+                    if (index === action.index) {
+                        return Object.assign({}, movie, {
+                            focusedImg: !action.focusedImg
+                        })
+                    }
+                    return movie
+                })
+            })
+        }
+        case "CLEAR_MOVIE_DETAILS__FOR_SEARCHED_MOVIES": {
+            return Object.assign({}, state, {
+                searchedMovies: state.searchedMovies.map((movie, index) => {
+                    if (index === action.index) {
+                        return Object.assign({}, movie, {
+                            focusedImg: false
+                        })
+                    }
+                    return movie
+                })
+            })
+        }
+        case "GET_CLEAR_SEARCHED_MOVIE": {
+            return Object.assign({}, state, {
+                searchedMovies: [],
+                inputValue: ""
             })
         }
         case "DELETE_FROM_WATCH_LIST": {

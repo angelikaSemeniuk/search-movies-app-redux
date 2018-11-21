@@ -5,7 +5,7 @@ import { handlePreviousPage, handleNextPage } from "../actions";
 class Pagination extends React.Component {
     render() {
         return (
-            <div className="pagination">
+            <>
                 {(this.props.currentPage !== 1) ? (
                     <button className="previousPage" onClick={this.props.handlePreviousPage.bind(this, this.props.currentPage)}>Previous page</button>
                 ) : (
@@ -14,7 +14,7 @@ class Pagination extends React.Component {
                 <span className="currentPage" dangerouslySetInnerHTML={{__html: this.props.currentPage}}></span>
                 <p className="numberOfPages" dangerouslySetInnerHTML={{__html: " of " + this.props.totalPages + " pages "}}></p>
                 <button className="nextPage" onClick={this.props.handleNextPage.bind(this, this.props.currentPage)}>Next page</button>
-            </div>
+            </>
         );
     }
 }

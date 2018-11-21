@@ -7,24 +7,11 @@ import {
     addMovieToWatchListFromDetails,
     handleRequestByMovieId,
     handleRequestForRecommendation,
-    getClearReceivedMovie
+    getClearReceivedMovie,
+    handleChangeOnInput
 } from "../actions";
 import queryString from 'query-string';
 import Loader from "react-loader";
-
-const getGenresName = (movieGenreIds, genres) => {
-    let genresOfMovie = [];
-    if (genres.genres) {
-        for(let i=0; i < movieGenreIds.length; i++) {
-            for(let j=0; j < genres.genres.length; j++) {
-                if (movieGenreIds[i] === genres.genres[j].id) {
-                    genresOfMovie.push(genres.genres[j].name);
-                }
-            }
-        }
-    }
-    return genresOfMovie;
-};
 
 class MovieDetails extends React.Component {
     componentDidMount() {
@@ -39,30 +26,34 @@ class MovieDetails extends React.Component {
 
     render() {
         //const loaded = false;
-        const alreadyAddedToWatchList = this.props.watchList.filter((movie) => {
-            if(movie.title === this.props.receivedMovie.title) {
-                return movie.title
-            }
-        });
+
         const infoOfMovie = this.props.receivedMovie.map ((movie) => {
-            const genresName = getGenresName(movie.id, this.props.genres);
-            const genres = genresName.map( (genre, index) => (
-                <li key={index}>{genre}</li>
+            const genres = movie.genres.map( (genre, index) => (
+                <li key={index}>{genre.name}</li>
             ));
+            const alreadyAddedToWatchList = this.props.watchList.filter((item) => {
+                if(item.title === movie.title) {
+                    return item.title
+                }
+            });
             return (
                 <>
-                    <p>{movie.title}</p>
-                    <img src={"http://image.tmdb.org/t/p/w342/" + movie.image}/>
-                    {
-                        alreadyAddedToWatchList.length || this.props.addedToWatchList ?
-                            <button disabled>Add to watch list</button> :
-                            <button onClick={this.props.addMovieToWatchListFromDetails.bind(this, movie.id, movie.title, movie.image)}>Add to watch list</button>
-                    }
-                    <p dangerouslySetInnerHTML={{__html: "Original title  " + movie.originalTitle}}></p>
-                    <p>{movie.releasedDate.slice(0,4)}</p>
-                    <ul>{genres}</ul>
-                    <p>{movie.rating}</p>
-                    <p>{movie.overview}</p>
+                    <div className="movie-image">
+                        <img src={"http://image.tmdb.org/t/p/w342/" + movie.image}/>
+                    </div>
+                    <div className="movie-info">
+                        <h3>{movie.title}</h3>
+                        <h4 dangerouslySetInnerHTML={{__html: "Original title : " + movie.originalTitle}}></h4>
+                        <p className="released-date">{movie.releasedDate.slice(0,4)}</p>
+                        <ul className="genres">{genres}</ul>
+                        <p className="rating">{movie.rating}</p>
+                        <p className="overview">{movie.overview}</p>
+                        {
+                            alreadyAddedToWatchList.length || this.props.addedToWatchList ?
+                                <button disabled>Add to watch list</button> :
+                                <button className="addButton" onClick={this.props.addMovieToWatchListFromDetails.bind(this, movie.id, movie.title, movie.image)}>Add to watch list</button>
+                        }
+                    </div>
                 </>
             )
 
@@ -73,11 +64,18 @@ class MovieDetails extends React.Component {
                 <div className="navigation">
                     <Link to='/'>Top Rated Movies</Link>
                     <Link to="/list-to-watch">List to watch</Link>
-                    <InputSearch/>
+                    <div className="search-container">
+                        <input
+                            type="search"
+                            value={this.props.inputValue}
+                            onChange={this.props.handleChangeOnInput.bind(this)}
+                            placeholder="Search movie..."
+                        />
+                    </div>
                 </div>
-                {!this.props.loaded ? <Loader loaded={this.props.loaded} /> : (
+                { this.props.inputValue ? <InputSearch/> : (
                     <>
-                        <div>{infoOfMovie}</div>
+                        <div className="movie">{infoOfMovie}</div>
                         <MoviesRecommendation/>
                     </>
                 )}
@@ -92,7 +90,8 @@ const mapStateToProps = (state) => {
         receivedMovie: state.receivedMovie,
         watchList: state.watchList,
         addedToWatchList: state.addedToWatchList,
-        loaded: state.loaded
+        loaded: state.loaded,
+        inputValue: state.inputValue
     }
 };
 
@@ -107,6 +106,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         getClearReceivedMovie: () => {
             dispatch(getClearReceivedMovie());
+        },
+        handleChangeOnInput: (event) => {
+            dispatch(handleChangeOnInput(event.target.value));
         }
     }
 };
